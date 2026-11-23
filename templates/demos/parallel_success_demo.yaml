@@ -1,0 +1,33 @@
+# =============================================================================
+# 并行组 + 成功条件演示
+# =============================================================================
+# 作用：同阶段 parallel_group 并行跑两步，并用 stdout_contains 校验输出
+# 目标：本机（Windows；步骤动作为 cmd.exec）
+# 能否随便执行：✅ 可以（Windows）。仅 echo，无副作用
+# Linux 请改用 shell.exec 或另写模板
+# =============================================================================
+name: parallel-success-demo
+version: 1
+description: 同阶段并行组 + 成功条件演示
+stages:
+  - name: parallel-main
+    steps:
+      - id: a
+        action: cmd.exec
+        command: echo parallel-a
+        parallel_group: g1
+        success_when:
+          exit_code: 0
+          stdout_contains: parallel-a
+      - id: b
+        action: cmd.exec
+        command: echo parallel-b
+        parallel_group: g1
+        success_when:
+          exit_code: 0
+          stdout_contains: parallel-b
+  - name: after
+    steps:
+      - id: done
+        action: delay
+        seconds: 0

@@ -1,0 +1,22 @@
+# =============================================================================
+# 本机冒烟（Linux / macOS / Git Bash 等类 Unix）
+# =============================================================================
+# 作用：验证「编排引擎 + Local 连接器」能否跑通（echo + 短等待）
+# 目标：执行页选「本机」
+# 能否随便执行：✅ 可以。只读本机 echo，无远端、不改业务文件
+# Windows 请用同目录 local_smoke_windows.yaml
+# =============================================================================
+name: local-smoke
+version: 1
+description: 本地冒烟：验证编排引擎与 Local 连接器
+variables:
+  GREETING: AutoExecTool
+stages:
+  - name: smoke
+    steps:
+      - id: echo_hello
+        action: shell.exec
+        command: echo Hello-{{GREETING}}
+      - id: short_wait
+        action: delay
+        seconds: 1

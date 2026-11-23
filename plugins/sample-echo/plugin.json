@@ -1,0 +1,7 @@
+{
+  "id": "sample-echo",
+  "version": "1.0.0",
+  "api_compat": "1",
+  "entry": "plugin:register",
+  "description": "示例插件：注册 sample.echo 动作"
+}

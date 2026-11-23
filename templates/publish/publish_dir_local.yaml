@@ -1,0 +1,34 @@
+# =============================================================================
+# 本机目录发布（给「发布中心」用）
+# =============================================================================
+# 作用：备份当前部署目录 → 将制品目录拷到部署目录
+# 变量（通常由发布中心注入，勿空跑）：
+#   DEPLOY_DIR   当前应用部署路径
+#   PACKAGE_PATH 制品解压/包路径
+#   BACKUP_REF   备份目标路径
+# 目标：本机
+# 能否随便执行：⚠️ 不建议在执行页直接跑。缺变量会失败；变量填错会覆盖目录
+# 推荐：发布中心 → 选应用/环境/制品 → 发布（内部会调用本模板）
+# =============================================================================
+name: publish-dir-local
+version: 1
+description: 本地目录发布（备份 → 部署制品）
+stages:
+  - name: backup
+    steps:
+      - id: backup_current
+        action: fs.copy_tree
+        src: "{{DEPLOY_DIR}}"
+        dest: "{{BACKUP_REF}}"
+        ok_if_missing: true
+  - name: deploy
+    steps:
+      - id: deploy_package
+        action: fs.copy_tree
+        src: "{{PACKAGE_PATH}}"
+        dest: "{{DEPLOY_DIR}}"
+  - name: verify
+    steps:
+      - id: done_marker
+        action: delay
+        seconds: 0

@@ -1,0 +1,25 @@
+# =============================================================================
+# Linux 目录回滚模板
+# =============================================================================
+# 作用：从备份目录恢复到部署目录
+# 目标：SSH Linux
+# 能否随便执行：❌ 不要用默认 /opt、/var/backups 路径直接跑
+# =============================================================================
+name: rollback-dir-linux
+version: 1
+description: Linux 目录一键回滚（从备份恢复）
+variables:
+  DEPLOY_DIR: /opt/apps/demo
+  BACKUP_REF: /var/backups/demo
+stages:
+  - name: rollback
+    steps:
+      - id: restore_backup
+        action: fs.copy_tree
+        src: "{{BACKUP_REF}}"
+        dest: "{{DEPLOY_DIR}}"
+  - name: verify
+    steps:
+      - id: list_deploy
+        action: shell.exec
+        command: "ls -la {{DEPLOY_DIR}}"

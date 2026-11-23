@@ -1,0 +1,24 @@
+# =============================================================================
+# 指令组演示
+# =============================================================================
+# 作用：演示 command_groups + 步骤 use_group 展开（展开为 delay 两步）
+# 目标：本机
+# 能否随便执行：✅ 可以。只有 delay，不访问网络/磁盘业务数据
+# =============================================================================
+name: group-demo
+version: 1
+description: 指令组展开演示（跨平台）
+command_groups:
+  greet_block:
+    steps:
+      - id: wait_a_bit
+        action: delay
+        seconds: 1
+      - id: say
+        action: delay
+        seconds: 0
+stages:
+  - name: main
+    steps:
+      - id: use_greet
+        use_group: greet_block

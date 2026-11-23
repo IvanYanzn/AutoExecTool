@@ -1,0 +1,20 @@
+# =============================================================================
+# 本机冒烟（Windows）
+# =============================================================================
+# 作用：验证编排引擎 + 本机 PowerShell 执行
+# 目标：执行页选「本机」
+# 能否随便执行：✅ 可以。仅 Write-Output 与 delay，无副作用
+# 也是 GUI「执行流程」默认示例之一
+# =============================================================================
+name: local-smoke-windows
+version: 1
+description: Windows 本地冒烟（PowerShell）
+stages:
+  - name: smoke
+    steps:
+      - id: ps_hello
+        action: powershell.exec
+        command: Write-Output 'Hello-AutoExecTool'
+      - id: short_wait
+        action: delay
+        seconds: 1

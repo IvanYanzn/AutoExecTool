@@ -1,0 +1,149 @@
+QWidget {
+  background-color: #F4F6F8;
+  color: #1B242C;
+  font-size: 13px;
+}
+
+QMainWindow, QDialog {
+  background-color: #F4F6F8;
+}
+
+QFrame#NavPanel {
+  background-color: #FFFFFF;
+  border-right: 1px solid #D5DCE3;
+}
+
+QPushButton {
+  background-color: #FFFFFF;
+  border: 1px solid #D5DCE3;
+  border-radius: 6px;
+  padding: 6px 14px;
+  min-height: 28px;
+}
+
+QPushButton:hover {
+  border-color: #0F6E8C;
+}
+
+QPushButton#PrimaryButton {
+  background-color: #0F6E8C;
+  color: #FFFFFF;
+  border: none;
+}
+
+QPushButton#PrimaryButton:hover {
+  background-color: #0C5A73;
+}
+
+QPushButton#NavButton {
+  text-align: left;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 12px;
+  background-color: transparent;
+}
+
+QPushButton#NavButton:checked {
+  background-color: #EEF1F4;
+  color: #0F6E8C;
+  font-weight: 600;
+}
+
+QLabel#TitleLabel {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+QLabel#MutedLabel {
+  color: #5C6B7A;
+}
+
+QPlainTextEdit, QTextEdit, QLineEdit {
+  background-color: #FFFFFF;
+  border: 1px solid #D5DCE3;
+  border-radius: 6px;
+  padding: 6px;
+}
+
+QTextEdit#LogConsole {
+  background-color: #FAFBFC;
+  border: 1px solid #D5DCE3;
+  border-radius: 6px;
+  padding: 8px 10px;
+  selection-background-color: #D6EAF5;
+}
+
+QStatusBar {
+  background-color: #FFFFFF;
+  border-top: 1px solid #D5DCE3;
+}
+
+QWidget#FlowCanvasHost {
+  background-color: #EEF1F4;
+}
+
+QFrame#FlowStageFrame {
+  background-color: #FFFFFF;
+  border: 1px solid #D5DCE3;
+  border-radius: 10px;
+}
+
+QLabel#FlowStageHeader {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1B242C;
+}
+
+QLabel#FlowStageArrow,
+QLabel#FlowStepArrow {
+  color: #5C6B7A;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+QFrame#FlowStepCard,
+QFrame#FlowStepCardSelected {
+  background-color: #FAFBFC;
+  border: 1px solid #D5DCE3;
+  border-radius: 8px;
+}
+
+QFrame#FlowStepCard:hover {
+  border-color: #0F6E8C;
+}
+
+QFrame#FlowStepCardSelected {
+  background-color: #E8F4F8;
+  border: 2px solid #0F6E8C;
+}
+
+QLabel#FlowStepId {
+  color: #5C6B7A;
+  font-size: 12px;
+}
+
+QLabel#FlowStepTitle {
+  font-weight: 600;
+  color: #1B242C;
+}
+
+QLabel#FlowStepMeta {
+  color: #5C6B7A;
+  font-size: 12px;
+}
+
+QLabel#FlowBadge {
+  color: #0F6E8C;
+  font-size: 12px;
+}
+
+QPushButton#FlowGhostButton {
+  background-color: transparent;
+  border: 1px dashed #D5DCE3;
+  color: #5C6B7A;
+}
+
+QPushButton#FlowGhostButton:hover {
+  border-color: #0F6E8C;
+  color: #0F6E8C;
+}

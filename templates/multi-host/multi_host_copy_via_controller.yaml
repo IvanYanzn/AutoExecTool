@@ -1,0 +1,52 @@
+# =============================================================================
+# 多机示例：经控制端中转，在两台库存主机之间拷文件
+# =============================================================================
+# 作用：演示步骤级 host（file.download @源 → file.upload @目标）
+# 拓扑：源机 --download--> 控制端临时目录 --upload--> 目标机
+#       （不是源机直连目标机）
+#
+# 前置：
+#   1) 「主机与凭证」中已配置两台 SSH 主机并绑定凭证
+#   2) 把 SRC_HOST / DST_HOST 改成库存里的「主机名称」
+#   3) 确认远端 REMOTE_SRC 文件存在；LOCAL_TMP 目录可写
+#   4) 执行页目标类型选「本机」（默认上下文；步骤已各自指定 host）
+#
+# 能否随便执行：⚠️ 改好主机名与路径后再跑。会读写远端与本机临时文件
+# =============================================================================
+name: multi-host-copy-via-controller
+version: 1
+description: 步骤级 host 绑定 — 从源机下载再上传到目标机
+variables:
+  # 与「主机与凭证」中的主机「名称」一致（也可用主机 id）
+  SRC_HOST: "源文件服务器"
+  DST_HOST: "目标应用服务器"
+  REMOTE_SRC: "/tmp/demo-artifact.bin"
+  REMOTE_DST: "/tmp/demo-artifact.bin"
+  # 控制端中转路径（请改成你本机可写目录；Linux 可用 /tmp/...）
+  LOCAL_TMP: "C:/Temp/autoexectool/_aet_out/demo-artifact.bin"
+
+stages:
+  - name: 从源机拉取
+    steps:
+      - id: download_from_src
+        host: "{{SRC_HOST}}"
+        action: file.download
+        remote: "{{REMOTE_SRC}}"
+        local: "{{LOCAL_TMP}}"
+
+  - name: 推到目标机
+    steps:
+      - id: upload_to_dst
+        host: "{{DST_HOST}}"
+        action: file.upload
+        local: "{{LOCAL_TMP}}"
+        remote: "{{REMOTE_DST}}"
+
+  - name: 目标机校验
+    steps:
+      - id: verify_on_dst
+        host: "{{DST_HOST}}"
+        action: shell.exec
+        command: "ls -lh '{{REMOTE_DST}}'"
+        success_when:
+          exit_code: 0

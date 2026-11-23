@@ -1,0 +1,37 @@
+# =============================================================================
+# Linux 目录发布模板（给「发布中心」或自建流程参考）
+# =============================================================================
+# 作用：在 Linux 目标机上备份 → 拷贝制品 → ls 校验
+# 下方 variables 仅为示例路径，生产请改掉或由发布中心覆盖
+# 目标：SSH Linux 主机（或本机若控制端即 Linux）
+# 能否随便执行：❌ 不要用默认路径直接跑。/opt/apps/demo 等可能不存在或误覆盖
+# 使用前必须确认 DEPLOY_DIR / PACKAGE_PATH / BACKUP_REF
+# =============================================================================
+name: publish-dir-linux
+version: 1
+description: Linux 目录发布模板（备份 → 部署 → 健康检查可选）
+variables:
+  DEPLOY_DIR: /opt/apps/demo
+  PACKAGE_PATH: /tmp/demo-package
+  BACKUP_REF: /var/backups/demo
+stages:
+  - name: backup
+    steps:
+      - id: backup_current
+        action: fs.copy_tree
+        src: "{{DEPLOY_DIR}}"
+        dest: "{{BACKUP_REF}}"
+        ok_if_missing: true
+  - name: deploy
+    steps:
+      - id: deploy_package
+        action: fs.copy_tree
+        src: "{{PACKAGE_PATH}}"
+        dest: "{{DEPLOY_DIR}}"
+  - name: verify
+    steps:
+      - id: list_deploy
+        action: shell.exec
+        command: "ls -la {{DEPLOY_DIR}}"
+        success_when:
+          exit_code: 0

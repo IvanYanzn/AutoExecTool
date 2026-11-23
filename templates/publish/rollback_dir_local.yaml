@@ -1,0 +1,24 @@
+# =============================================================================
+# 本机目录回滚（给「发布中心」用）
+# =============================================================================
+# 作用：用 BACKUP_REF 整树覆盖回 DEPLOY_DIR
+# 变量：DEPLOY_DIR、BACKUP_REF（由发布中心注入）
+# 目标：本机
+# 能否随便执行：⚠️ 不建议空跑。会覆盖部署目录，变量错误有风险
+# 推荐：发布中心 → 回滚
+# =============================================================================
+name: rollback-dir-local
+version: 1
+description: 一键回滚（用备份目录覆盖部署目录）
+stages:
+  - name: rollback
+    steps:
+      - id: restore_backup
+        action: fs.copy_tree
+        src: "{{BACKUP_REF}}"
+        dest: "{{DEPLOY_DIR}}"
+  - name: verify
+    steps:
+      - id: done_marker
+        action: delay
+        seconds: 0
